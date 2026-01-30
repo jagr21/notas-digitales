@@ -193,8 +193,56 @@
         }
         .btn-add { background-color: var(--success-color); font-size: 0.9rem; }
         .btn-add:hover { background-color: #219150; }
-        .btn-delete { background-color: #e74c3c; padding: 5px 10px; font-size: 0.9rem; border-radius: 5px; color: white; border: none; cursor: pointer; }
-        .btn-delete:hover { background-color: #c0392b; }
+        
+        /* Menú de Acciones (Tres puntos) */
+        .action-menu-container {
+            position: relative;
+            display: inline-block;
+        }
+        .btn-menu {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0 10px;
+            color: var(--text-color);
+            line-height: 1;
+        }
+        .btn-menu:hover {
+            color: var(--accent-color);
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: #fff;
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            z-index: 10;
+            border-radius: 5px;
+            overflow: hidden;
+            text-align: left;
+        }
+        .dropdown-content button {
+            color: var(--text-color);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            text-align: left;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.9rem;
+        }
+        .dropdown-content button:hover {
+            background-color: #f1f1f1;
+        }
+        .dropdown-content button.delete-option {
+            color: #e74c3c;
+        }
+        .show { display: block; }
 
         /* Utilidades */
         .back-btn {
@@ -246,8 +294,19 @@
         }
 
         /* Optimización Móvil (Vista de Tarjetas) */
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
             .screen { padding: 20px; }
+            .mobile-eval-info-container {
+                display: flex !important;
+            }
+
+            #toast-container {
+                left: 50%;
+                right: auto;
+                transform: translateX(-50%);
+                align-items: center;
+            }
+
             thead { display: none; } /* Ocultar encabezados de tabla */
             
             tr {
@@ -334,6 +393,156 @@
             display: inline-block; vertical-align: middle;
         }
         .info-icon:hover { opacity: 1; transform: scale(1.1); }
+
+        /* Barra de Búsqueda Global (Inicio) */
+        .global-search-container {
+            margin: 40px auto 0 auto;
+            max-width: 700px;
+            position: relative;
+        }
+        .global-search-container input {
+            width: 100%;
+            padding: 18px 25px;
+            border-radius: 50px;
+            border: 2px solid #eee;
+            font-size: 1.1rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        .global-search-container input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.15);
+            outline: none;
+            transform: translateY(-2px);
+        }
+
+        /* Notificaciones Toast */
+        #toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toast {
+            background-color: var(--success-color);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            animation: slideIn 0.3s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes slideIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeOut {
+            to { opacity: 0; transform: translateY(-20px); }
+        }
+
+        /* Barra de Herramientas de Filtro */
+        .filter-toolbar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        .filter-toolbar select {
+            flex: 1;
+            min-width: 140px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: white;
+            font-size: 0.9rem;
+            color: var(--text-color);
+            cursor: pointer;
+        }
+        .filter-toolbar select:focus {
+            border-color: var(--accent-color);
+            outline: none;
+        }
+
+        /* Botones de Info Evaluación en Móvil */
+        .mobile-eval-info-container {
+            display: none; /* Oculto en escritorio */
+            gap: 10px;
+            margin-bottom: 15px;
+            justify-content: space-between;
+        }
+        
+        .eval-info-btn {
+            background-color: white;
+            color: var(--text-color);
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            flex: 1;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: all 0.2s;
+        }
+        
+        .eval-info-btn:hover {
+            background-color: #f8f9fa;
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        /* Resultados de Búsqueda Global */
+        .global-search-result {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+        }
+        .global-search-result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .global-search-result h3 {
+            margin: 0 0 10px 0;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            flex-grow: 1;
+        }
+        .global-search-result .meta {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+        }
+        .global-search-result .grades-summary {
+            display: flex;
+            gap: 10px;
+        }
+        .grade-badge {
+            background: #f8f9fa;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            border: 1px solid #ddd;
+        }
     </style>
 </head>
 <body>
@@ -342,6 +551,7 @@
         <!-- 1. Pantalla de Inicio -->
         <section id="screen-home" class="screen active">
             <h1>Notas Digitales</h1>
+            
             <div class="flags-container">
                 <button class="flag-btn" onclick="selectLanguage('Italiano')">
                     <img src="https://flagcdn.com/w320/it.png" alt="Italia">
@@ -351,6 +561,10 @@
                     <img src="https://flagcdn.com/w320/gb.png" alt="Reino Unido">
                     <span>Inglés</span>
                 </button>
+            </div>
+
+            <div class="search-container global-search-container">
+                <input type="text" id="global-search-input" placeholder="Buscar alumno en todos los grados..." onkeyup="handleGlobalSearch(event)">
             </div>
         </section>
 
@@ -372,6 +586,19 @@
             </div>
         </section>
 
+        <!-- 4. Pantalla de Resultados de Búsqueda Global -->
+        <section id="screen-search-results" class="screen">
+            <button class="back-btn" onclick="goHome()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Volver al inicio
+            </button>
+            <h2 id="search-title">Resultados de Búsqueda</h2>
+            <div id="global-loader" class="loader hidden">Buscando...</div>
+            <div id="search-results-container">
+                <!-- Resultados aquí -->
+            </div>
+        </section>
+
         <!-- 3. Pantalla de Lista de Alumnos -->
         <section id="screen-class" class="screen">
             <button class="back-btn" onclick="goBackToMenu()">
@@ -385,6 +612,42 @@
             
             <div class="search-container">
                 <input type="text" id="search-input" placeholder="Buscar alumno por nombre..." onkeyup="filterStudents()">
+            </div>
+            
+            <!-- Barra de Filtros y Ordenamiento -->
+            <div class="filter-toolbar">
+                <select id="sort-select" onchange="applySortAndFilter()">
+                    <option value="default">Orden: Por defecto</option>
+                    <option value="name">Nombre (A-Z)</option>
+                    <option value="grade1">Nota I (Mayor a Menor)</option>
+                    <option value="grade2">Nota II (Mayor a Menor)</option>
+                    <option value="grade3">Nota III (Mayor a Menor)</option>
+                </select>
+                <select id="filter-status-select" onchange="applySortAndFilter()">
+                    <option value="all">Mostrar: Todos</option>
+                    <option value="with_notes_1">Eval I: Con Nota</option>
+                    <option value="without_notes_1">Eval I: Sin Nota</option>
+                    <option value="with_notes_2">Eval II: Con Nota</option>
+                    <option value="without_notes_2">Eval II: Sin Nota</option>
+                    <option value="with_notes_3">Eval III: Con Nota</option>
+                    <option value="without_notes_3">Eval III: Sin Nota</option>
+                </select>
+            </div>
+
+            <!-- Botones de Info Evaluación (Solo Móvil) -->
+            <div class="mobile-eval-info-container">
+                <button class="eval-info-btn" onclick="openInfoModal(1)">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    Eval. I
+                </button>
+                <button class="eval-info-btn" onclick="openInfoModal(2)">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    Eval. II
+                </button>
+                <button class="eval-info-btn" onclick="openInfoModal(3)">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    Eval. III
+                </button>
             </div>
             
             <div id="loader" class="loader hidden">Cargando datos...</div>
@@ -453,6 +716,9 @@
         </div>
     </div>
 
+    <!-- Contenedor de Toasts -->
+    <div id="toast-container"></div>
+
     <script>
         // CONFIGURACIÓN
         // URL del Script de Google Apps (Corregida y verificada del contexto anterior)
@@ -462,6 +728,8 @@
         let currentLang = '';
         let currentGrade = '';
         let currentMeta = {}; // Almacena la info de las evaluaciones
+        let currentStudents = []; // Almacena la lista de alumnos actual
+        let currentGlobalResults = []; // Almacena resultados de búsqueda global
         let currentEvalIndex = null; // Para saber qué evaluación se está editando
 
         // ELEMENTOS DOM
@@ -472,6 +740,8 @@
         const classTitle = document.getElementById('class-title');
         const studentsBody = document.getElementById('students-body');
         const loader = document.getElementById('loader');
+        const globalLoader = document.getElementById('global-loader');
+        const searchResultsContainer = document.getElementById('search-results-container');
         const infoModal = document.getElementById('info-modal');
 
         // NAVEGACIÓN
@@ -511,6 +781,10 @@
             
             // Limpiar búsqueda al recargar datos
             if(document.getElementById('search-input')) document.getElementById('search-input').value = '';
+            
+            // Reiniciar filtros
+            if(document.getElementById('sort-select')) document.getElementById('sort-select').value = 'default';
+            if(document.getElementById('filter-status-select')) document.getElementById('filter-status-select').value = 'all';
 
             try {
                 // Construir URL con parámetros
@@ -526,6 +800,7 @@
 
                 // Separar alumnos y metadatos
                 const students = responseData.students || [];
+                currentStudents = students;
                 currentMeta = responseData.meta || {};
                 
                 renderTable(students);
@@ -539,8 +814,9 @@
         }
 
         function renderTable(students) {
+            studentsBody.innerHTML = ''; // IMPORTANTE: Limpiar tabla antes de renderizar para evitar duplicados
             if (!students || students.length === 0) {
-                studentsBody.innerHTML = `<tr><td colspan="3" style="text-align:center;">No hay alumnos registrados.</td></tr>`;
+                studentsBody.innerHTML = `<tr><td colspan="5" style="text-align:center;">No hay alumnos registrados (o no coinciden con el filtro).</td></tr>`;
                 return;
             }
 
@@ -556,7 +832,15 @@
                     ${renderGradeCell(student, 'Nota I', 'Fecha I', 1)}
                     ${renderGradeCell(student, 'Nota II', 'Fecha II', 2)}
                     ${renderGradeCell(student, 'Nota III', 'Fecha III', 3)}
-                    <td data-label="Acción" style="text-align: center;"><button class="btn-delete" onclick="deleteStudent('${student.studentId}')" title="Borrar Alumno">🗑️</button></td>
+                    <td data-label="Acción" style="text-align: center;">
+                        <div class="action-menu-container">
+                            <button class="btn-menu" onclick="toggleActionMenu(event, '${student.studentId}')">⋮</button>
+                            <div id="menu-${student.studentId}" class="dropdown-content">
+                                <button onclick="editStudent('${student.studentId}')">✏️ Editar Nombre</button>
+                                <button class="delete-option" onclick="deleteStudent('${student.studentId}')">🗑️ Eliminar</button>
+                            </div>
+                        </div>
+                    </td>
                 `;
                 studentsBody.appendChild(row);
             });
@@ -596,11 +880,39 @@
             const params = new URLSearchParams();
             params.append('payload', JSON.stringify(payload));
 
-            await fetch(API_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                body: params
-            });
+            // Intentar hasta 3 veces si hay error de red (común en móviles tras inactividad)
+            for (let i = 0; i < 3; i++) {
+                try {
+                    await fetch(`${API_URL}?t=${new Date().getTime()}`, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        body: params
+                    });
+                    return; // Éxito
+                } catch (error) {
+                    console.warn(`Intento ${i + 1} fallido:`, error);
+                    if (i === 2) throw error; // Si falla la 3ra vez, lanzamos el error
+                    await new Promise(r => setTimeout(r, 1000)); // Esperar 1 seg
+                }
+            }
+        }
+
+        // --- SISTEMA DE NOTIFICACIONES ---
+        function showToast(message) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>${message}</span>
+            `;
+            container.appendChild(toast);
+
+            // Eliminar después de 3 segundos
+            setTimeout(() => {
+                toast.style.animation = 'fadeOut 0.3s ease-in forwards';
+                toast.addEventListener('animationend', () => toast.remove());
+            }, 3000);
         }
 
         async function updateGrade(studentId, selectElement, evalIndex) {
@@ -632,6 +944,9 @@
                 // Efecto visual de éxito (borde verde temporal)
                 selectElement.style.borderColor = 'var(--success-color)';
                 setTimeout(() => selectElement.style.borderColor = '#ddd', 2000);
+                
+                // Mostrar notificación
+                showToast('Nota guardada correctamente');
 
             } catch (error) {
                 console.error('Error saving grade:', error);
@@ -670,15 +985,85 @@
             }
         }
 
-        async function deleteStudent(studentId) {
-            if (!confirm("¿Estás seguro de que quieres eliminar a este alumno y todas sus notas? Esta acción no se puede deshacer.")) return;
+        // --- GESTIÓN DE MENÚS Y EDICIÓN ---
+        
+        // Cerrar menús al hacer clic fuera
+        window.addEventListener('click', () => {
+            document.querySelectorAll('.dropdown-content').forEach(d => d.classList.remove('show'));
+        });
+
+        function toggleActionMenu(event, id) {
+            event.stopPropagation(); // Evitar que el click cierre el menú inmediatamente
+            // Cerrar otros menús abiertos
+            document.querySelectorAll('.dropdown-content').forEach(d => {
+                if (d.id !== 'menu-' + id) d.classList.remove('show');
+            });
+            document.getElementById('menu-' + id).classList.toggle('show');
+        }
+
+        async function editStudent(studentId, lang = null, grade = null) {
+            let student;
+            let isGlobal = false;
+
+            // Determinar si estamos editando desde búsqueda global o lista de clase
+            if (lang && grade) {
+                isGlobal = true;
+                // En búsqueda global el ID viene como 'id', en lista de clase como 'studentId'
+                student = currentGlobalResults.find(s => String(s.id) === String(studentId) && s.lang === lang && s.grade === grade);
+            } else {
+                student = currentStudents.find(s => String(s.studentId) === String(studentId));
+            }
+            
+            if (!student && !isGlobal) return; // Si no encontramos al alumno en la lista local
+            // Si es global y no encontramos el objeto, usamos placeholders vacíos si es necesario, pero debería encontrarse.
+
+            const newName = prompt("Editar Nombres:", student.Nombres || '');
+            if (newName === null) return;
+            const newSurname = prompt("Editar Apellidos:", student.Apellidos || '');
+            if (newSurname === null) return;
 
             loader.classList.remove('hidden');
-            const payload = { action: 'deleteStudent', lang: currentLang, grade: currentGrade, studentId: studentId };
+            
+            const payload = {
+                action: 'editStudent',
+                lang: lang || currentLang,
+                grade: grade || currentGrade,
+                studentId: studentId,
+                nombres: newName,
+                apellidos: newSurname
+            };
 
             try {
                 await sendDataToScript(payload);
-                setTimeout(fetchStudents, 1500);
+                
+                if (isGlobal) {
+                    const query = document.getElementById('global-search-input').value;
+                    setTimeout(() => performGlobalSearch(query), 1500);
+                } else {
+                    setTimeout(fetchStudents, 1500);
+                }
+            } catch (error) {
+                console.error(error);
+                alert("Error al editar alumno.");
+                loader.classList.add('hidden');
+            }
+        }
+
+        async function deleteStudent(studentId, lang = null, grade = null) {
+            if (!confirm("¿Estás seguro de que quieres eliminar a este alumno y todas sus notas? Esta acción no se puede deshacer.")) return;
+
+            loader.classList.remove('hidden');
+            const payload = { action: 'deleteStudent', lang: lang || currentLang, grade: grade || currentGrade, studentId: studentId };
+
+            try {
+                await sendDataToScript(payload);
+                
+                if (lang && grade) {
+                    const query = document.getElementById('global-search-input').value;
+                    setTimeout(() => performGlobalSearch(query), 1500);
+                } else {
+                    setTimeout(fetchStudents, 1500);
+                }
             } catch (error) {
                 console.error(error);
                 alert("Error al eliminar alumno.");
@@ -704,10 +1089,56 @@
                 }
             }
         }
+        
+        // --- ORDENAMIENTO Y FILTRADO ---
+        const gradeValues = { 'A+': 8, 'A': 7, 'B': 6, 'C': 5, 'D': 4, 'E': 3, 'F': 2, '': 0, '-': 0 };
+
+        function applySortAndFilter() {
+            const sortType = document.getElementById('sort-select').value;
+            const filterType = document.getElementById('filter-status-select').value;
+            
+            if (!currentStudents) return;
+
+            // 1. Filtrar
+            let filtered = currentStudents.filter(s => {
+                const checkNote = (val) => val && val !== '-' && val !== '';
+                
+                if (filterType === 'with_notes_1') return checkNote(s['Nota I']);
+                if (filterType === 'without_notes_1') return !checkNote(s['Nota I']);
+                
+                if (filterType === 'with_notes_2') return checkNote(s['Nota II']);
+                if (filterType === 'without_notes_2') return !checkNote(s['Nota II']);
+                
+                if (filterType === 'with_notes_3') return checkNote(s['Nota III']);
+                if (filterType === 'without_notes_3') return !checkNote(s['Nota III']);
+                
+                return true; // 'all'
+            });
+
+            // 2. Ordenar
+            if (sortType === 'name') {
+                filtered.sort((a, b) => {
+                    const nameA = `${a.Nombres} ${a.Apellidos}`.toLowerCase();
+                    const nameB = `${b.Nombres} ${b.Apellidos}`.toLowerCase();
+                    return nameA.localeCompare(nameB);
+                });
+            } else if (sortType.startsWith('grade')) {
+                const keyMap = { 'grade1': 'Nota I', 'grade2': 'Nota II', 'grade3': 'Nota III' };
+                const key = keyMap[sortType];
+                filtered.sort((a, b) => {
+                    const valA = gradeValues[a[key]] || 0;
+                    const valB = gradeValues[b[key]] || 0;
+                    return valB - valA; // Descendente (Mayor a Menor)
+                });
+            }
+
+            renderTable(filtered);
+            filterStudents(); // Re-aplicar búsqueda de texto si existe
+        }
 
         function toggleMobileRow(cell) {
             // Solo activa si estamos en vista móvil
-            if (window.innerWidth <= 768) {
+            if (window.innerWidth <= 1024) {
                 cell.parentElement.classList.toggle('expanded');
             }
         }
@@ -780,6 +1211,76 @@
             document.getElementById('eval-date').value = '';
             document.getElementById('eval-notes').value = '';
             saveEvalInfo(); // Guardar vacío
+        }
+
+        // --- BÚSQUEDA GLOBAL ---
+        async function handleGlobalSearch(event) {
+            if (event.key === 'Enter') {
+                const query = document.getElementById('global-search-input').value;
+                if (!query.trim()) return;
+                performGlobalSearch(query);
+            }
+        }
+
+        async function performGlobalSearch(query) {
+            showScreen(document.getElementById('screen-search-results'));
+            document.getElementById('search-title').textContent = `Resultados para "${query}"`;
+            searchResultsContainer.innerHTML = '';
+            globalLoader.classList.remove('hidden');
+
+            try {
+                // Usamos el parámetro 'q' para indicar búsqueda global al backend
+                const url = `${API_URL}?q=${encodeURIComponent(query)}&t=${new Date().getTime()}`;
+                const response = await fetch(url);
+                const results = await response.json();
+
+                if (results.error) throw new Error(results.error);
+                
+                // Guardamos resultados para poder editarlos
+                currentGlobalResults = results;
+                renderGlobalResults(results);
+            } catch (error) {
+                console.error(error);
+                searchResultsContainer.innerHTML = `<p style="text-align:center; color:red;">Error en la búsqueda.</p>`;
+            } finally {
+                globalLoader.classList.add('hidden');
+            }
+        }
+
+        function renderGlobalResults(results) {
+            if (!results || results.length === 0) {
+                searchResultsContainer.innerHTML = `<p style="text-align:center;">No se encontraron alumnos.</p>`;
+                return;
+            }
+
+            results.forEach(student => {
+                // Generamos un ID único para el menú en la búsqueda global para evitar conflictos
+                const menuId = `global-${student.lang}-${student.grade}-${student.id}`;
+                
+                const div = document.createElement('div');
+                div.className = 'global-search-result';
+                div.innerHTML = `
+                    <div class="global-search-result-header">
+                        <div>
+                            <h3>${student.nombres} ${student.apellidos}</h3>
+                            <div class="meta">Idioma: <strong>${student.lang}</strong> | Grado: <strong>${student.grade}</strong></div>
+                        </div>
+                        <div class="action-menu-container">
+                            <button class="btn-menu" onclick="toggleActionMenu(event, '${menuId}')">⋮</button>
+                            <div id="menu-${menuId}" class="dropdown-content">
+                                <button onclick="editStudent('${student.id}', '${student.lang}', '${student.grade}')">✏️ Editar Nombre</button>
+                                <button class="delete-option" onclick="deleteStudent('${student.id}', '${student.lang}', '${student.grade}')">🗑️ Eliminar</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grades-summary">
+                        <span class="grade-badge">Nota I: ${student.nota1 || '-'}</span>
+                        <span class="grade-badge">Nota II: ${student.nota2 || '-'}</span>
+                        <span class="grade-badge">Nota III: ${student.nota3 || '-'}</span>
+                    </div>
+                `;
+                searchResultsContainer.appendChild(div);
+            });
         }
     </script>
 </body>
